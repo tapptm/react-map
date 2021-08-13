@@ -1,8 +1,108 @@
+div.relative {
+  position: relative;
+}
+
+div.researcher {
+  position: absolute;
+  top: -60px;
+  left: 0;
+}
+
+div.co-reseacher {
+  position: absolute;
+  top: -10px;
+  left: -60px;
+}
+
+div.co-reseacher-group {
+  position: absolute;
+  top: -10px;
+  left: 60px;
+}
+
 .image-icon {
-    /* height: 52px !important;
+  height: 48px !important;
+  width: 48px !important;
+  border-radius: 50%;
+  border: solid 2px;
+  border-color: rgb(44, 44, 44);
+  margin-bottom: 20px;
+}
+
+.image-icon-co {
+  /* height: 52px !important;
     width: 52px !important; */
-    border-radius: 50%;
-    border: solid;
-    border-color: rgb(233, 233, 233);
-    margin-bottom: 100px;
+  border-radius: 50%;
+  border: solid 3px;
+  border-color: rgb(255, 8, 0);
+}
+
+.markerClusterSmall {
+  border-radius: 50%;
+  font-size: 0.9vw;
+  color: rgb(14, 14, 14);
+  font-weight: 600;
+  line-height: 55px;
+  background: rgba(82, 250, 4, 0.938);
+  border: 7px solid rgba(255, 255, 255, 0.438);
+  /* font-family: Open Sans; */
+  text-transform: uppercase;
+}
+.markerClusterMedium {
+  border-radius: 50%;
+  font-size: 1vw;
+  background: rgb(250, 225, 4);
+  border: 8px solid rgba(255, 253, 228, 0.411);
+  line-height:60px;
+  /* height: 70px !important ; 
+  width: 70px !important; */
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  /* font-family: Open Sans; */
+  text-transform: uppercase;
+}
+.markerClusterLarge {
+  border-radius: 70px;
+  font-size: 0.6vw;
+  color: #fff;
+  font-weight: 900;
+  /* font-family: Open Sans; */
+  text-transform: uppercase;
+}
+.markerClusterLargeXL {
+  border-radius: 70px;
+  font-size: 0.6vw;
+  color: #fff;
+  font-weight: 900;
+  /* font-family: Open Sans; */
+  text-transform: uppercase;
+}
+.markerClusterLabel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.marker-cluster-custom {
+  background: rgba(82, 250, 4, 0.938);
+  border: 10px solid rgba(255, 255, 255, 0.438);
+  border-radius: 70px;
+  color: rgb(0, 0, 0);
+  height: 40px;
+  line-height: 60px;
+  text-align: center;
+  width: 40px;
+}
+.popupContent {
+  text-align: center;
+  vertical-align: middle;
+  /*  height: "100px"; */
+  width: "150px";
+  /*  marginTop: "30px"; */
+}
+
+.request-popup .leaflet-popup-content-wrapper {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.904);
+  width: 290px;
 }

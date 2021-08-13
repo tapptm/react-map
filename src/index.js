@@ -5,12 +5,13 @@ import App from "./App";
 import Map from "./Components/GoogleMap";
 import LeafletMap from "./Components/LeafletMap";
 import reportWebVitals from "./reportWebVitals";
-import 'leaflet/dist/leaflet.css';
+import "leaflet/dist/leaflet.css";
+import "react-leaflet-markercluster/dist/styles.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <LeafletMap />
+    <App />
+    {/* <LeafletMap /> */}
   </React.StrictMode>,
   document.getElementById("root")
 );

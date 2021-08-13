@@ -1,0 +1,99 @@
+[
+    {
+        "co_researcher": "ชุมชนตะวันตกวัดเดิม",
+        "co_img": "community.jpg",
+        "name": "asd",
+        "img": "07df00d7b25d2b19e55fa758360ef661.jpg",
+        "lat": 15.025,
+        "lng": 103.856,
+        "project": [
+            {
+                "name": "test",
+                "lat": 15.04699993133545,
+                "lng": 103.70099639892578
+            },
+            {
+                "name": "test",
+                "lat": 15.0139892,
+                "lng": 103.5457401
+            }
+        ],
+        "researcher": [
+            {
+                "name": "asd",
+                "img": "07df00d7b25d2b19e55fa758360ef661.jpg"
+            },
+            {
+                "name": "asdas",
+                "img": "07df00d7b25d2b19e55fa758360ef661.jpg"
+            }
+        ]
+    },
+    {
+        "co_researcher": "ชุมชนบ้านห้วยแคน",
+        "co_img": "78706119_2404470763138644_3113772043158421504_o.jpg",
+        "name": "asd",
+        "img": "07df00d7b25d2b19e55fa758360ef661.jpg",
+        "lat": 15.222,
+        "lng": 102.491,
+        "project": [
+            {
+                "name": "test",
+                "lat": 15.393875889382132,
+                "lng": 102.18329323476753
+            },
+            {
+                "name": "test",
+                "lat": 15.423511425881408,
+                "lng": 102.359789400458
+            },
+            {
+                "name": "test",
+                "lat": 15.56969,
+                "lng": 102.0007556
+            },
+            {
+                "name": "asd",
+                "lat": 15.5705909,
+                "lng": 101.5803693
+            }
+        ],
+        "researcher": [
+            {
+                "name": "asd1",
+                "img": "07df00d7b25d2b19e55fa758360ef661.jpg"
+            },
+            {
+                "name": "asdas",
+                "img": "07df00d7b25d2b19e55fa758360ef661.jpg"
+            },
+            {
+                "name": "asdas",
+                "img": "07df00d7b25d2b19e55fa758360ef661.jpg"
+            },
+            {
+                "name": "asdas",
+                "img": "07df00d7b25d2b19e55fa758360ef661.jpg"
+            }
+        ]
+    },
+    {
+        "co_researcher": "ชุมชนบ้านปรางค์",
+        "co_img": "78345715_2405860382999682_9109036141964689408_o.jpg",
+        "lat": 14.496,
+        "lng": 102.982,
+        "project": [
+            {
+                "name": "test1",
+                "lat": 14.49338626866081,
+                "lng": 102.98103562879574
+            }
+        ],
+        "researcher": [
+            {
+                "name": "asd1",
+                "img": "07df00d7b25d2b19e55fa758360ef661.jpg"
+            }
+        ]
+    }
+]
