@@ -198,13 +198,13 @@ class Map extends React.Component {
 
     if (count < 10) {
       size = "Small";
-      iconSize = 70;
+      iconSize = 80;
     } else if (count >= 10 && count < 100) {
       size = "Medium";
-      iconSize = 80;
+      iconSize = 90;
     } else if (count >= 100 && count < 500) {
       size = "Large";
-      iconSize = 90;
+      iconSize = 100;
     }
     const options = {
       cluster: `markerCluster${size}`,
@@ -260,7 +260,7 @@ class Map extends React.Component {
       <div>
         <MapContainer
           center={this.state.defaultPosition}
-          zoom={6}
+          zoom={8}
           style={{ width: "100%", height: "100vh" }}
         >
           <LayersControl position="topright">

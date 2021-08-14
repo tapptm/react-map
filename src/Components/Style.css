@@ -39,10 +39,10 @@ div.co-reseacher-group {
 
 .markerClusterSmall {
   border-radius: 50%;
-  font-size: 0.9vw;
+  font-size: 1vw;
   color: rgb(14, 14, 14);
   font-weight: 600;
-  line-height: 55px;
+  line-height: 60px;
   background: rgba(82, 250, 4, 0.938);
   border: 7px solid rgba(255, 255, 255, 0.438);
   /* font-family: Open Sans; */
@@ -50,10 +50,10 @@ div.co-reseacher-group {
 }
 .markerClusterMedium {
   border-radius: 50%;
-  font-size: 1vw;
-  background: rgb(250, 225, 4);
+  font-size: 1.1vw;
+  background: rgba(82, 250, 4, 0.938);
   border: 8px solid rgba(255, 253, 228, 0.411);
-  line-height:60px;
+  line-height:70px;
   /* height: 70px !important ; 
   width: 70px !important; */
   color: rgb(0, 0, 0);
