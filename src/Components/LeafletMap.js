@@ -232,12 +232,12 @@ class Map extends React.Component {
     const prolocat = this.getPolylineCoProject(mapData);
     // console.log(prolocat);
 
-    const realCircles = this.getOnlyRealValue(mapCircles);
+    // const realCircles = this.getOnlyRealValue(mapCircles);
     // console.log(cidCluster);
 
     this.setState({
       markers: mapMarkers,
-      circleMakers: realCircles,
+      // circleMakers: realCircles,
       cidPolylines: cidCluster,
       coPolylines: locations,
       coProjPolylines: prolocat,

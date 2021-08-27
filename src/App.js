@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import LeafletMap from "../src/Components/LeafletMap";
 import GoogleMap from "../src/Components/GoogleMap";
+import D3Map from "../src/Components/D3Map";
 
 import { Container, Navbar, NavDropdown, Nav } from "react-bootstrap";
 
@@ -23,9 +24,9 @@ function App() {
               <LinkContainer to="/">
                 <Nav.Link>Map</Nav.Link>
               </LinkContainer>
-              {/* <LinkContainer to="/googlemap">
-                <Nav.Link>Google Map</Nav.Link>
-              </LinkContainer> */}
+              <LinkContainer to="/d3map">
+                <Nav.Link>D3Map</Nav.Link>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -37,6 +38,9 @@ function App() {
         </Route>
         <Route path="/googlemap">
           <GoogleMap />
+        </Route>
+        <Route path="/d3map">
+          <D3Map />
         </Route>
       </Switch>
     </Router>
