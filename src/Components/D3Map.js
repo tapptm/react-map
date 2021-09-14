@@ -9,11 +9,12 @@ import "./d3.css";
 const url = "http://localhost:3000";
 
 const MapComponent = () => {
+  const apiUrl = "https://api.rmuti.ac.th/km_api";
+  const localUrl = "http://localhost:4000";
+
   const mapData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:4000/api/get/us-project-map"
-      );
+      const response = await axios.get(`${localUrl}/api/get/us-project-map`);
       return response.data;
     } catch (e) {
       console.log(e);
@@ -22,7 +23,7 @@ const MapComponent = () => {
 
   function D3Layer() {
     const map = useMap();
-    let radius = 19;
+    let radius = 15;
     useEffect(async () => {
       const svgLayer = L.svg({ clickable: true });
       svgLayer.addTo(map);
@@ -30,7 +31,17 @@ const MapComponent = () => {
       // get map data from api
       const data = await mapData();
 
-      data.nodes.forEach((d, i) => {
+      let researherList = [],
+        projectList = [],
+        community = [],
+        company = [],
+        goverment = [];
+      data.nodes.forEach((d) => {
+        if (d.label == "นักวิจัย") researherList.push(d.id);
+        if (d.label == "งานวิจัย") projectList.push(d.id);
+        if (d.label == "ชุมชน") community.push(d.id);
+        if (d.label == "หน่วยงานภาคธุรกิจ") company.push(d.id);
+        if (d.label == "หน่วยงานภาครัฐ") goverment.push(d.id);
         d.latLong = new L.LatLng(d.lat, d.lon);
         d.layerPoint = map.latLngToLayerPoint(d.latLong);
         d.radius = radius;
@@ -39,6 +50,27 @@ const MapComponent = () => {
       data.links.forEach((d) => {
         d.source = d.from;
         d.target = d.to;
+        d.isResearcherToResearcher =
+          researherList.includes(d.target) && researherList.includes(d.source);
+        d.isProjectToProject =
+          projectList.includes(d.target) && projectList.includes(d.source);
+        d.isCommunityToCommunity =
+          community.includes(d.target) && community.includes(d.source);
+        d.isCompanyToCompany =
+          company.includes(d.target) && company.includes(d.source);
+        d.isGovermentToGoverment =
+          goverment.includes(d.target) && goverment.includes(d.source);
+        d.stroke = d.isResearcherToResearcher
+          ? "rgb(255, 115, 0)"
+          : d.isProjectToProject
+          ? "lime"
+          : d.isCommunityToCommunity
+          ? "rgb(0, 38, 255)"
+          : d.isCompanyToCompany
+          ? "rgb(212, 0, 255)"
+          : d.isGovermentToGoverment
+          ? "rgb(255, 0, 170)"
+          : "lime";
       });
 
       // set d3 to use svg layer in leaflet and config it to enable interaction with svg element.
@@ -51,9 +83,10 @@ const MapComponent = () => {
       const defs = svg.append("svg:defs");
 
       let tooltipEl = function (d) {
-        const project_url = url + "?project_id=" + d.project_id;
-        const co_url = url + "?co_id=" + d.coresearcher_id;
-        const user_url = url + "?user_idcard=" + d.user_idcard;
+        const project_url =
+          "/monitoring/ProjcetDetail?project_id=" + d.project_id;
+        const co_url = "/monitoring/CoResearcher?co_id=" + d.coresearcher_id;
+        const user_url = "/monitoring/Researcher?user_idcard=" + d.user_idcard;
 
         if (d.project_id)
           return `
@@ -72,12 +105,12 @@ const MapComponent = () => {
         if (d.coresearcher_id)
           return `
         <div class="tip__container">  
-          <div class="val">${d.id} ${d.label}</div>
+          <div class="val"><h6>${d.label}</h6></div>
           <div class="close">
             <button>&times</button>
           </div>
           <hr/>
-          <div class="val">${d.coresearcher_id}</div>
+          <div class="val">${d.coname}</div>
           <hr/>
           <a href="${co_url}" class="btn">รายละเอียดเพิ่มเติม</a>
           
@@ -91,7 +124,7 @@ const MapComponent = () => {
             <button>&times</button>
           </div>
           <hr/>
-          <div class="val">${d.user_idcard}</div>
+          <div class="val">${d.fullname}</div>
           <hr/>
           <a href="${user_url}" class="btn">รายละเอียดเพิ่มเติม</a>         
         </div>`;
@@ -119,7 +152,7 @@ const MapComponent = () => {
         .selectAll("line")
         .data(data.links)
         .join("line")
-        .attr("stroke", "lime")
+        .attr("stroke", (d) => d.stroke)
         .attr("stroke-opacity", 0.8)
         .attr("stroke-width", 3);
 
@@ -130,7 +163,7 @@ const MapComponent = () => {
         .attr("id", (d) => `node-${d.id}`)
         .attr("r", radius)
         .attr("stroke", "white")
-        .attr("stroke-width", 2.5)
+        .attr("stroke-width", 1)
         .attr("fill", "#555")
         .attr("fill", (d) => {
           let imgSize = d.radius * 2;
@@ -143,8 +176,8 @@ const MapComponent = () => {
             .attr("xlink:href", d.img)
             .attr("width", imgSize)
             .attr("height", imgSize)
-            .attr("x", 0)
-            .attr("y", 0);
+            .attr("x", 1)
+            .attr("y", 1);
           return `url(#node-img-id${d.id})`;
         });
 
@@ -185,30 +218,31 @@ const MapComponent = () => {
       function deHighlight() {
         nodes.style("opacity", 1);
         links.style("opacity", 1);
-        label.style("visibility", "hidden");
-        links.attr("stroke", (d) => {
-          // console.log(d.source.id);
-          return `node-${d.source.id}` == d.id || `node-${d.target.id}` == d.id
-            ? "red"
-            : "lime";
-        });
+        label.style("opacity", 0).style("visibility", "hidden");
+        links.attr("stroke", (d) => d.stroke);
+        // {
+        //   return `node-${d.source.id}` == d.id || `node-${d.target.id}` == d.id
+        //     ? "red"
+        //     : "lime";
+        // };
       }
 
       function highlightNeighbours(d) {
         deHighlight();
 
         nodes.style("opacity", (n) => {
-          return neighbours[d.id].indexOf(n.id) != -1 ? 1 : 0.1;
+          return neighbours[d.id].indexOf(n.id) != -1 ? 1 : 0.2;
         });
 
         links.style("opacity", (n) => {
-          return d.id == n.source.id || d.id == n.target.id ? 1 : 0.1;
+          return d.id == n.source.id || d.id == n.target.id ? 1 : 0.2;
         });
 
         label
           .filter((n) => neighbours[d.id].indexOf(n.id) != -1)
           // we can't use display:none with labels because we need to load them in the DOM in order to calculate the background rectangle dimensions with the getBBox function.
           // So we used visibility:hidden instead.
+          .style("opacity", 1)
           .style("visibility", "visible");
       }
 
@@ -295,25 +329,27 @@ const MapComponent = () => {
         // simulation.alpha(1).restart();
       };
 
+      // because child link follow parent link we must separate them.
       const simulation = d3
         .forceSimulation(data.nodes)
         .force(
           "link",
           d3
             .forceLink()
-            .links(data.links)
+            .links(data.links.filter((d) => d.isResearcherToResearcher))
             .id((d) => d.id)
         )
         .force(
           "link",
           d3
             .forceLink()
-            .links(data.links)
+            .links(data.links.filter((d) => !d.isResearcherToResearcher))
             .id((d) => d.id)
-            .distance(50)
         )
-        .force("charge", d3.forceManyBody())
-        .force("charge", d3.forceManyBody().strength(-400))
+        // .force('link', d3.forceLink().links(data.links).id(d => d.id))
+        // .force('link', d3.forceLink().links(data.links).id(d => d.id).distance(50))
+        // .force('charge', d3.forceManyBody())
+        .force("charge", d3.forceManyBody().strength(-300))
         .force(
           "collision",
           d3.forceCollide().radius((d) => d.radius * 1.5)
@@ -326,17 +362,35 @@ const MapComponent = () => {
           "y",
           d3.forceY().y((d) => d.layerPoint.y)
         )
-        // .force('x', d3.forceX().x(d => d.x).strength(0.06))
-        // .force('y', d3.forceY().y(d => d.y).strength(0.04))
+        // .force('x', d3.forceX().x(d => d.layerPoint.x).strength(0.06))
+        // .force('y', d3.forceY().y(d => d.layerPoint.y).strength(0.04))
         .on("tick", () => {
           drawAndUpdate();
         });
+
+      map.on("zoomstart", () => {
+        nodes.each((d) => {
+          d.prevLatLong = map.layerPointToLatLng(d.layerPoint);
+        });
+      });
+
+      // update child to change latLng position to follow parent position for smooth redraw
+      const updateChild = () => {
+        nodes.each((d) => {
+          d.layerPoint = map.latLngToLayerPoint(d.prevLatLong);
+          if (d.type === "child") {
+            d.x = d.layerPoint.x;
+            d.y = d.layerPoint.y;
+          }
+        });
+      };
 
       // update force center position of all child nodes when the zooming end
       map.on("zoomend", () => {
         simulation.force("x").initialize(nodes.data());
         simulation.force("y").initialize(nodes.data());
-        simulation.alpha(1).restart();
+        simulation.alpha(0.3).restart();
+        updateChild();
       });
     }, []);
     return null;
