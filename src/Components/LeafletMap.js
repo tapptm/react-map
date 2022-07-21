@@ -25,7 +25,7 @@ import {
 import { Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 
-const apiUrl = "https://api.rmuti.ac.th/km_api";
+const apiUrl = "https://kmapi.kims-rmuti.com";
 const apiUrlLocal = "http://localhost:4000";
 
 class Map extends React.Component {
@@ -119,7 +119,7 @@ class Map extends React.Component {
   getMarkers = async () => {
     try {
       const response = await this.getResponse(
-        `${apiUrlLocal}/api/get/us-project`
+        `${apiUrl}/api/get/us-project`
       );
       const locations = [];
       response.forEach((x) => {

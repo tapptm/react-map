@@ -10,11 +10,11 @@ const url = "http://localhost:3000";
 
 const MapComponent = () => {
   const apiUrl = "https://api.rmuti.ac.th/km_api";
-  const localUrl = "http://localhost:4000";
+  const localUrl = "http://localhost:3000";
 
   const mapData = async () => {
     try {
-      const response = await axios.get(`${localUrl}/api/get/us-project-map`);
+      const response = await axios.get(`${localUrl}/api/get/knowledge/visualize-map?university=&knowledgegroup=&impact=&goal=`);
       return response.data;
     } catch (e) {
       console.log(e);
@@ -30,6 +30,7 @@ const MapComponent = () => {
 
       // get map data from api
       const data = await mapData();
+      console.log(data);
 
       let researherList = [],
         projectList = [],
@@ -70,7 +71,7 @@ const MapComponent = () => {
           ? "rgb(212, 0, 255)"
           : d.isGovermentToGoverment
           ? "rgb(255, 0, 170)"
-          : "lime";
+          : "red";
       });
 
       // set d3 to use svg layer in leaflet and config it to enable interaction with svg element.
@@ -349,7 +350,7 @@ const MapComponent = () => {
         // .force('link', d3.forceLink().links(data.links).id(d => d.id))
         // .force('link', d3.forceLink().links(data.links).id(d => d.id).distance(50))
         // .force('charge', d3.forceManyBody())
-        .force("charge", d3.forceManyBody().strength(-300))
+        .force("charge", d3.forceManyBody().strength(-100))
         .force(
           "collision",
           d3.forceCollide().radius((d) => d.radius * 1.5)
